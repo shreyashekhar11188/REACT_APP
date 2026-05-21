@@ -1,28 +1,27 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react'
 
 function UseEffect() {
-    const [timer,setTimer]=useState(0)
+  const[counter,setCounter]=useState(0);
 
-    const cb=()=>{
-        setTimer(timer=>timer+1)
-    }
-    useEffect(()=>{
-      setTimeout(cb,1000);  
-    });
-    
-    //fetch data
-    const[apiData, seApiData]=useState([]);
-    useEffect(()=>{
-        fetch('https:jsonplaceholder.typicode.com/posts/1')
-        .then(response=>response.json))
-        .then(apiData=>seApiData)
-    })
-    
+useEffect(()=>{
+  setTimeout(()=>{
+    setCounter((counter)=>counter+1)
+  },1000);
+});
+
+//fetch data api
+  const [apiData, setApiData] = useState(null);
+useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts/1')
+      .then(response => response.json())   // FIXED
+      .then(data => setApiData(data.id));
+  }, []);
   return (
-    <div>
-        <h1>Counter {timer}</h1>
-    </div>
+   <>
+   <h1>UseEffect Example: Self Counter</h1>
+    <h2>{counter}</h2>
+    <h3>API Title: {apiData}</h3>
+   </>
   )
 }
 
